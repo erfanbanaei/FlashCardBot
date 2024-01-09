@@ -98,7 +98,9 @@ async def Display_Words(client, message):
         table = PrettyTable(['ID', 'Word'])
         for row in result:
             table.add_row([row[0], row[1]])
-        await message.reply_text(table,reply_markup=Keyboard)
+        with open("display_words.txt", "w") as f:
+            f.write(f"{table}")
+        await app.send_document(message.chat.id,"display_words.txt",reply_markup=Keyboard)
     except Exception as e:
         await message.reply_text(f'❌ Error: {e}')
 # =====================================================================
