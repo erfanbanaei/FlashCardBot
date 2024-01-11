@@ -137,7 +137,8 @@ def get_random_words(count):
 async def Take_Test(client, message):
     try:
         # Take a test
-        random_words = get_random_words(10)
+        num_random_words = await message.chat.ask(f'[?] Enter the number of test questions you want to be asked')
+        random_words = get_random_words(num_random_words.text)
         for i, word in enumerate(random_words, start=1):
             user_input = await message.chat.ask(f'[?] {i}. Do you know the meaning of "**{word}**"? (yes/no): ',reply_markup=Keyboard_Take_Test)
             if user_input.text == 'yes':
