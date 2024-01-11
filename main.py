@@ -77,12 +77,12 @@ async def Add_Word(client, message):
             cur.execute('SELECT id FROM words WHERE word = ?', (word,))
             existing_word = cur.fetchone()
             if existing_word:
-                await message.reply_text(f'❗️ The word "{word}" already exists in the database.')
+                await message.reply_text(f'❗️ The word "**{word}**" already exists in the database.')
             else:
                 # Add the word to the database
                 cur.execute('INSERT INTO words (word) VALUES (?)', (word,))
                 con.commit()
-                await message.reply_text(f'✅ The word "{word}" has been added to the database.')
+                await message.reply_text(f'✅ The word "**{word}**" has been added to the database.')
         except Exception as e:
             await message.reply_text(f'❌ Error: {e}')
         if word == "🔙 Back 🔙":
@@ -139,7 +139,7 @@ async def Take_Test(client, message):
         # Take a test
         random_words = get_random_words(10)
         for i, word in enumerate(random_words, start=1):
-            user_input = await message.chat.ask(f'[?] {i}. Do you know the meaning of "{word}"? (yes/no): ',reply_markup=Keyboard_Take_Test)
+            user_input = await message.chat.ask(f'[?] {i}. Do you know the meaning of "**{word}**"? (yes/no): ',reply_markup=Keyboard_Take_Test)
             if user_input.text == 'yes':
                 cur.execute('UPDATE words SET correct = correct + 1 WHERE word = ?', (word,))
             else:
